@@ -1,0 +1,10 @@
+
+ul, li, ol, li, dl, dt{
+    margin: 0px;
+    padding: 0px;
+}
+ul li, ol li, dl dt{
+    margin: 0px;
+    padding: 0px;
+	list-style-type: none;
+}

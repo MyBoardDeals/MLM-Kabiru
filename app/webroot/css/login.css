@@ -1,0 +1,170 @@
+body {
+ background-image: url("../img/bg-body17.jpg");
+font:normal 0.9em Arial; margin:0; padding:0; 
+ }
+h2 {display:inline;}
+.header {width:1000px;margin:0 auto;}
+.header {margin-bottom:100px;text-align:left;}
+.header P {font-size:18px;}
+.header a {color:#07C; }
+.header a {margin:0 8px;}
+.header a.current {color:black; text-decoration:none;}
+.loginarea ul {margin:0; padding:0;}
+.loginarea li {padding-top:6px;padding-bottom:6px; list-style-type:none; text-align:left; margin:0;}
+.green {color:Green;}
+.cn {font-family: "Courier New", Georgia;}
+#status {display:inline-block; margin-left:26px;line-height:50px;height:50px;vertical-align:middle;}
+
+.code {
+    border: dashed 1px #BCBCCB; padding:8px 12px; background-color: #F3F3F9; white-space:pre; font-family:"Courier New", Georgia;
+    font-size:12px; margin:6px 0;overflow:auto; 
+}
+
+#maindiv {  
+    width:980px;
+    margin:0 auto;    
+  /*  box-shadow: 0 0 5px #BBB;border:1px solid #CCC; background-color:#FFF;*/
+}
+
+#content { width:980px; margin:0 auto; height:auto;  }
+
+
+
+/*slider frame*/
+#sliderFrame {   
+    margin:0 auto; 
+    padding:10px;      
+	background: none repeat scroll 0 0 #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0; 
+	padding:5px 20px;   
+    width: 300px;
+}
+   #sliderFrame2 {   
+    margin:0 auto; 
+    padding:10px;      
+	
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0; 
+	padding:5px 20px;   
+    width: 300px;
+}
+ #right {
+    width:296px;
+    margin:0 auto; 
+    padding:0 0 10px 8px;   
+	float:left;
+}  
+.red { font-size:11px; color:#FF0000; font-weight:bold;}    
+.small { font-size:11px;}        
+
+#slider {
+    float:left;
+    width:680px;height:306px;/* Make it the same size as your images. */
+	background:#fff url(loading.gif) no-repeat 50% 50%;
+	position:relative;
+	margin:0 auto;/*make the image slider center-aligned */
+}
+#slider img {
+	position:absolute;
+	border:none;
+	visibility:hidden;
+}
+
+/* the link style (if an image is wrapped in a link) */
+#slider a.imgLink {
+	z-index:2;
+	display:none;position:absolute;
+	top:0px;left:0px;border:0;padding:0;margin:0;
+	width:100%;height:100%;
+}
+
+/* Caption styles */
+div.mc-caption-bg, div.mc-caption-bg2 {
+	position:absolute;
+	width:400px;
+	height:auto;
+	padding:10px;
+	left:120px; /*if the caption needs to be aligned from right, specify by right instead of left. i.e. right:20px;*/
+	bottom:10px;/*if the caption needs to be aligned from top, specify by top instead of bottom. i.e. top:150px;*/
+	z-index:3;
+	overflow:hidden;
+	font-size:0;
+}
+div.mc-caption-bg {
+	background:#DDD; /*Caption background color. Can be set to "background:transparent;", or set to semi-transparent through the sliderOptions.captionOpacity setting in the javascript.*/
+	border:1px solid white;
+	border-radius: 5px;
+}
+div.mc-caption {
+	font:bold 13px/16px Arial;
+	color:#069;
+	z-index:4;
+	text-align:center;
+}
+div.mc-caption a { 
+	color:#060;
+}
+
+
+/* ------ built-in navigation bullets wrapper that is relative to the #slider ------*/
+div.navBulletsWrapper  {
+	display:none;
+}
+
+
+/*thumbnails*/
+#thumbs 
+{
+    float:left;
+    margin-left:10px;
+    width:230px;
+    font:normal 11px/13px Arial;
+    border-top:1px solid #CCC;
+    color:#666;
+}
+#thumbs .thumb 
+{
+    border:1px solid #CCC;
+    border-top:1px solid #FFF;
+    padding:11px 8px;
+    background:#EEE;
+}
+#thumbs .thumb-on 
+{
+    background:#FFF;
+}
+
+#thumbs img{border:1px solid #DDD; cursor:pointer; width:70px; height:44px;}
+
+#thumbs .frame {float:left;padding:2px;border:1px solid #CCC;background:white;border-radius:3px;box-shadow:0 0 3px #BBB;font-size:0;line-height:0;}
+#thumbs .thumb-content {float:left;width:110px;padding-left:18px;}
+
+/* Captions in #thumbs .thumb-content */
+#thumbs .thumb-content p {font-weight:bold; color:#BF5D9B; margin:0 0 3px;padding:0;}
+#thumbs .thumb-on .thumb-content p {color:#BB0000;}
+
+
+/* --------- Others ------- */
+#slider 
+{
+	transform: translate3d(0,0,0);
+    -ms-transform:translate3d(0,0,0);
+    -moz-transform:translate3d(0,0,0);
+    -o-transform:translate3d(0,0,0);
+}
+
+#footer { padding-top:35px;}
+#footer ul { margin:0; padding:0;list-style-type:none;}
