@@ -1091,9 +1091,11 @@ class ApisController extends AppController {
 				$this->User->recursive=-1;	
 				$user=$this->User->findById($user_id);			
 				if($user!=false) {
-					$return = $this->get_profile_details($user, $user_id);
+					$return = $this->get_profile_details($return, $user, $user_id);
+				} else {
+					$return['status']=false;
+					$return['message']='Invalid user id';
 				}
-			
 			}	
 		}
 		
@@ -1114,22 +1116,24 @@ class ApisController extends AppController {
 			$email=$data['email'];
 		
 			if($email != null){
-			
 				$return['status']=true;
 				$return['message']='successful';
 			
 				$this->User->recursive=-1;	
 				$user= $this->User->find('first', array('conditions' => array('email' => $email))); // $this->User->findById($user_id);			
-				if($user!=false) {
-					$return = $this->get_profile_details($user, $user_id);
-				}			
+				if(!empty($user)) { // $user!=null
+					$return = $this->get_profile_details($return, $user, $user_id);
+				} else {
+					$return['status']=false;
+					$return['message']='Invalid email address';
+				}		
 			}	
 		}
 		
 		echo json_encode($return);
 	}
 
-	function get_profile_details($user, $user_id){
+	function get_profile_details($return, $user, $user_id){
 		
 		$capital_refund=$this->Transaction->find('all',array('conditions'=>array('Transaction.user_id'=>$user_id,'Transaction.type'=>3,'Transaction.commission_type'=>1),'fields'=>array('sum(Transaction.amount) as amount')));
 		$capitalrefund=$capital_refund['0']['0']['amount']+0;	
