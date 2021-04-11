@@ -22,7 +22,7 @@ class ApisController extends AppController {
 
 		parent::beforeFilter();						
 
-		$this->Auth->allow('login','sponsor_verification','sign_up','getdownline','network','getprofile','getprofileByEmail','statements','buy_position','getinfobyreferralcode');
+		$this->Auth->allow('login','sponsor_verification', 'get_sponsor_data','sign_up','getdownline','network','getprofile','getprofileByEmail','statements','buy_position','getinfobyreferralcode');
 	}
 	
    	function notificationsend($options=array()){	   
@@ -58,8 +58,6 @@ class ApisController extends AppController {
 					$prev_parent_id=$parent_id;	
 
 					$parent_id=$pmember['Tree']['parent_id'];		
-
-
 
 					$i++;
 
@@ -698,8 +696,6 @@ class ApisController extends AppController {
 				  }
 				}  
 			 
-             
-			
 			 $return['status']=true;
 			 $return['message']='Login successfull';	
 			 
@@ -800,7 +796,7 @@ class ApisController extends AppController {
  } 
  
 	
-	function recursivefuncdwn($loopArr){ 
+	function recursivefuncdwn($loopArr) { 
 
         $this->autoRender=false;
 	   
@@ -810,8 +806,7 @@ class ApisController extends AppController {
 		
         $datars=array();
 		
-           do {				
-			
+           do {	
 			$memb_id=array(); 
 			$dataary=array();			
 			foreach($loopArr as $pid){
@@ -825,7 +820,6 @@ class ApisController extends AppController {
 					}
 				}	
 			}		
-						
 			 		
 			 $loopArr=array();				 					
 		     $loopArr=$memb_id;	 
@@ -839,9 +833,33 @@ class ApisController extends AppController {
 			
 			
 		return $coountdl; 	
- } 
+	}
 	
-	
+	public function get_sponsor_data() {
+	    $this->autoRender=false;
+		$result = [
+			'status' => false,
+			'message' => 'Invalid Sponsor Code'
+		];
+		
+	    if($this->request->is('post')) {			
+
+		    $input = json_decode(file_get_contents('php://input'),true);
+			
+			$sponsor_code = $input['sponsor_code'];
+			if($sponsor_code){
+				$user=$this->Position->findByReferralcode($sponsor_code);	
+				if($user==false){
+					$result['message'] = 'The sponsor code does not exists.';	
+				} else {			
+					$result['message'] = 'The sponsor code is active.';
+					$result['data'] = $this->User->findById($user['Position']['user_id']);
+				}
+			}
+		}	
+		
+		echo json_encode($result);
+	}
 	
     public function login() {
 	    $this->autoRender=false;
@@ -849,7 +867,6 @@ class ApisController extends AppController {
 	    $return=array();	   
 		$return['status']=false;
 		$return['message']='Login unsuccessfull';
-
 		
 	    if($this->request->is('post')) {			
 
@@ -908,7 +925,6 @@ class ApisController extends AppController {
 			}			
 
 		 echo json_encode($return);	
-
 	}	 
  	
 	public function sign_up() {
@@ -934,18 +950,16 @@ class ApisController extends AppController {
 				$mobile_no=$data['mobile_no'];
 				$password='12345678';				
 
-				
-				
 			  if($sponsor_code){ 			  				
 				
 				$user=$this->Position->findByReferralcode($sponsor_code);	
 				if($user==false){	
 				  $iserror=1;
-				  $error[]='The sponsor code is not exists.';	
+				  $error[]='The sponsor code does not exists.';	
 				} else {
 				  
 				  $ref_position_id=$user['Position']['id'];	
-				  $sponsor_posotion_code=$user['Position']['referralcode'];	
+				  $sponsor_position_code=$user['Position']['referralcode'];	
 				  
 				  
 				  $this->User->recursive=-1;
@@ -959,7 +973,7 @@ class ApisController extends AppController {
 				 $adminuser=$this->Position->find('first',array('conditions'=>array('Position.user_id'=>1),'order'=>array('Position.id'=>'DESC')));	
 				 $ref_position_id=$adminuser['Position']['id'];	
 				 
-				 $sponsor_posotion_code=$adminuser['Position']['referralcode'];	
+				 $sponsor_position_code=$adminuser['Position']['referralcode'];	
 			   }	
 			   
 			   
@@ -974,29 +988,26 @@ class ApisController extends AppController {
 			    
 			  if(strlen($first_name)==0 || empty($first_name)){
 			     $iserror=1;
-			     $error[]='First name is required';	
+			     $error[]='Your first name cannot be found';
 			  }
 			  
 			  if(strlen($last_name)==0 || empty($last_name)){
 			     $iserror=1;
-			     $error[]='Last name is required';	
+			     $error[]='Your last name cannot be found';
 			  }
 			  
 			 if(strlen($mobile_no)==0 || empty($mobile_no)){
 			     $iserror=1;
-			     $error[]='Phone number required numbers only';	
+			     $error[]='Phone number is required to create a channel. Please update your profile';	
 			  } 
-			    			  
 			  
 				$this->User->recuesive=-1;
 				$count_mobile=$this->User->find('count',array('conditions'=>array('User.mobile_no'=>$mobile_no)));	
 				if($count_mobile>=1){
 				   $iserror=1;
-				   $error[]='Mobile number is already used';	
+				   $error[]='The phone number on your profile is already been used by another user.';	
 				}
-					   
-			   
-			   				
+				
 				$this->request->data['User']['sponsor_id']=$referral_user['User']['id'];  
 				$this->request->data['User']['direct_referral']=$referral_user['User']['id'];  	
 				$this->request->data['User']['username']=$username;					
@@ -1047,7 +1058,7 @@ class ApisController extends AppController {
 					
 					  $return['status']=true;
 					  $return['user_id']=$user_id;
-					  $return['referral_code']=$sponsor_posotion_code;
+					  $return['referral_code']=$sponsor_position_code;
 					  $return['entry_position_id']=$juser['Position']['id'];	
 					  $return['entry_position_code']=$juser['Position']['referralcode'];	
 					  $return['message']='New account has been created successfully'; 
